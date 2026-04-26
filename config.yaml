@@ -1,0 +1,36 @@
+# -----------------------------------------------------------------------
+# 7-Scenes ViT Pose Estimation — Configuration
+# -----------------------------------------------------------------------
+
+seed: 42
+
+# -----------------------------------------------------------------------
+# Dataset
+# -----------------------------------------------------------------------
+dataset:
+  root: data/7scenes          # Path to the extracted 7-Scenes dataset
+  scene: chess                # chess | fire | heads | office | pumpkin | redkitchen | stairs
+  image_size: 224
+  augment: true
+
+# -----------------------------------------------------------------------
+# Model
+# -----------------------------------------------------------------------
+model:
+  arch: vit                   # vit | cnn
+  name: vit_small_patch16_224 # timm model name (ViT-S/16)
+  pretrained: true            # use ImageNet-pretrained weights
+  hidden_dim: 512             # width of the MLP regression head
+  freeze_backbone: false      # freeze ViT backbone (fine-tune head only)
+
+# -----------------------------------------------------------------------
+# Training
+# -----------------------------------------------------------------------
+training:
+  epochs: 100
+  batch_size: 32
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  beta: 500.0                 # rotation loss weight (PoseNet style)
+  num_workers: 4
+  checkpoint_dir: checkpoints
